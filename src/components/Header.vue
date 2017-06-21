@@ -11,14 +11,14 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">
-            {{ Object.keys(this.$store.state.user).length != 0 ? this.$store.state.user.first_name : "Brand" }}
+            <!-- {{ Object.keys(this.$store.state.user).length != 0 ? this.$store.state.user.first_name : "Brand" }} -->
+            Group aggregator
           </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="#">Link</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
@@ -51,33 +51,19 @@ export default {
             /* Пользователь успешно авторизовался */
             store.dispatch('userLogin', response.session.user)
             localStorage.setItem('user', JSON.stringify(response.session.user))
-            // VK.Api.call('users.get', {user_ids: [response.session.user.id], fields: ['photo_50']}, (photo) => {
-            //   console.log(photo)
-            //   this.user['photo'] = photo.response[0].photo_50
-            // });
           } else {
             /* Пользователь нажал кнопку Отмена в окне авторизации */
           }
         });
       },
-      vkOut: function() {
-        VK.Auth.logout(function(response) {
-          // console.log(response);
-          localStorage.removeItem('user');
-          localStorage.removeItem('photo');
-        })
-      }
-  },
-
-  // created() {
-  //   let user_data = JSON.parse(localStorage.getItem('user'))
-  //   let user_photo = JSON.parse(localStorage.getItem('photo'))
-  //   if (user_data != null && user_photo != null) {
-  //     this.user = user_data
-  //     this.user.photo = user_photo
-  //     // console.log(this.user)
-  //   } else { console.log('user no auth')}
-  // },
+      // vkOut: function() {
+      //   VK.Auth.logout(function(response) {
+      //     // console.log(response);
+      //     localStorage.removeItem('user');
+      //     localStorage.removeItem('photo');
+      //   })
+      // }
+  }
 }
 </script>
 
