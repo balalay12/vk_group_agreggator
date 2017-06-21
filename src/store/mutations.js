@@ -5,6 +5,10 @@ export const mutations = {
     state.user = user_payload
   },
 
+  [types.USER_LOGOUT] (state) {
+    state.user = {}
+  },
+
   [types.USER_PHOTO] (state, user_photo) {
     state.user['photo'] = user_photo
   }

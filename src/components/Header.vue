@@ -27,6 +27,11 @@
                 type="button"
                 class="btn btn-primary navbar-btn"
                 @click="vkAuth">Vk Auth</button>
+              <button
+                v-else
+                type="button"
+                class="btn btn-primary navbar-btn"
+                @click="vkOut">Vk Out</button>
             </li>
           </ul>
         </div><!-- /.navbar-collapse -->
@@ -56,13 +61,13 @@ export default {
           }
         });
       },
-      // vkOut: function() {
-      //   VK.Auth.logout(function(response) {
-      //     // console.log(response);
-      //     localStorage.removeItem('user');
-      //     localStorage.removeItem('photo');
-      //   })
-      // }
+      vkOut() {
+        let store = this.$store
+        VK.Auth.logout(function(response) {
+          store.dispatch('userLogout')
+          localStorage.removeItem('user')
+        })
+      }
   }
 }
 </script>
