@@ -1,3 +1,5 @@
 export const USER_LOGIN = 'USER_LOGIN'
 export const USER_LOGOUT = 'USER_LOGOUT'
-export const USER_PHOTO = 'USER_PHOTO'
+export const USER_INIT = 'USER_INIT'
+export const USER_INIT_FAULT = 'USER_INIT_FAULT'
+export const USER_LOADING = 'USER_LOADING'

@@ -23,15 +23,15 @@
           <ul class="nav navbar-nav navbar-right">
             <li>
               <button
-                v-if="Object.keys(this.$store.state.user).length === 0"
+                v-if="!currentUser.auth"
                 type="button"
                 class="btn btn-primary navbar-btn"
-                @click="vkAuth">Vk Auth</button>
+                @click="userLogin">Vk Auth</button>
               <button
                 v-else
                 type="button"
                 class="btn btn-primary navbar-btn"
-                @click="vkOut">Vk Out</button>
+                @click="userLogout">Vk Out</button>
             </li>
           </ul>
         </div><!-- /.navbar-collapse -->
@@ -41,34 +41,22 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
     }
   },
 
-  methods: {
-      vkAuth() {
-        let store = this.$store
-        let permission = '262144'
-        VK.Auth.login(function(response, permission) {
-          if (response.session) {
-            /* Пользователь успешно авторизовался */
-            store.dispatch('userLogin', response.session.user)
-            localStorage.setItem('user', JSON.stringify(response.session.user))
-          } else {
-            /* Пользователь нажал кнопку Отмена в окне авторизации */
-          }
-        });
-      },
-      vkOut() {
-        let store = this.$store
-        VK.Auth.logout(function(response) {
-          store.dispatch('userLogout')
-          localStorage.removeItem('user')
-        })
-      }
-  }
+  computed: mapGetters([
+      'currentUser'
+  ]),
+
+  methods: mapActions([
+    'userLogin',
+    'userLogout'
+  ])
 }
 </script>
 

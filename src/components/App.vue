@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Header from './Header.vue'
 
 export default {
@@ -21,24 +22,12 @@ export default {
     }
   },
 
-  methods: {
-    userInit() {
-      let user_data = JSON.parse(localStorage.getItem('user'))
-      if (user_data != null) {
-        this.$store.dispatch('userLogin', user_data)
-      }
-    },
-    userPhoto() {
-      let store = this.$store
-      VK.Api.call('users.get', {user_ids: [store.state.user.id], fields: ['photo_50']}, (photo) => {
-        store.dispatch('userPhoto', photo.response[0].photo_50)
-      });
-    }
-  },
+  methods: mapActions([
+    'userInit'
+  ]),
 
   created() {
     this.userInit()
-    this.userPhoto()
   }
 }
 </script>

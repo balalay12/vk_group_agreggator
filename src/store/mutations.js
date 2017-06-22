@@ -7,9 +7,20 @@ export const mutations = {
 
   [types.USER_LOGOUT] (state) {
     state.user = {}
+    state.user.auth = false
   },
 
-  [types.USER_PHOTO] (state, user_photo) {
-    state.user['photo'] = user_photo
+  [types.USER_INIT] (state, user_data) {
+    user_data.loading = false
+    state.user = user_data
+    state.user.auth = true
+  },
+
+  [types.USER_INIT_FAULT] (state) {
+    state.user.loading = false
+  },
+
+  [types.USER_LOADING] (state) {
+    state.user.loading = true
   }
 }
