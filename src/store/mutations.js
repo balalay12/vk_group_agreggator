@@ -7,6 +7,8 @@ export const mutations = {
 
   [types.USER_LOGOUT] (state) {
     state.user = {}
+    state.groups.items = []
+    state.groups.count = ''
     state.user.auth = false
   },
 
@@ -22,5 +24,20 @@ export const mutations = {
 
   [types.USER_LOADING] (state) {
     state.user.loading = true
+  },
+
+  [types.GROUPS_LOADING] (state) {
+    state.groups.loading = true
+  },
+
+  [types.GROUPS_LOADING_SUCCESS] (state, groups_data) {
+    let count = groups_data.shift()
+    state.groups.items = groups_data
+    state.groups.count = count
+    state.groups.loading = false
+  },
+
+  [types.GROUPS_LOADING_FAULT] (state) {
+    state.groups.loading = false
   }
 }

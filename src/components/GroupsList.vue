@@ -1,0 +1,55 @@
+<template lang="html">
+  <div class="">
+    <form class="form-inline">
+      <div class="form-group">
+        <label>Ключевое слово</label>
+        <input type="text" v-model="keyword">
+      </div>
+      <button class="btn btn-default" @click="loadGroups">Поиск</button>
+    </form>
+    <hr>
+    <div class="">
+      <p v-if="groupsLoading">Groups is loading...</p>
+      <div v-else>
+        <div v-if="getGroups.items.length > 0">
+          <h6>Всего групп в ВК по этому слову: {{ getGroups.count }}</h6>
+          <h4>Результаты</h4>
+          <div v-for="group in getGroups.items" class="media">
+            <div class="media-left">
+              <img class="media-object img-circle" :src="group.photo" alt="">
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">{{ group.name }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapActions, mapGetters } from 'vuex'
+
+export default {
+  data() {
+    return {
+      keyword: ''
+    }
+  },
+
+  computed: mapGetters([
+    'groupsLoading',
+    'getGroups'
+  ]),
+
+  methods: {
+    loadGroups() {
+      this.$store.dispatch('groupsLoading', this.keyword)
+    }
+  }
+}
+</script>
+
+<style lang="css">
+</style>

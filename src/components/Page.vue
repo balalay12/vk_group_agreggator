@@ -1,6 +1,6 @@
 <template>
-  <div v-if="!currentUser.auth" class="">
-    Go for auth
+  <div v-if="!currentUser.auth" class="container">
+    <h3 class="text-center">Go for auth</h3>
   </div>
 
   <div v-else class="container">
@@ -9,22 +9,33 @@
     </div>
     <div class="row">
       <div class="col-md-4">
-        <img :src="currentUser.photo_50" alt="">
-        <p>{{ currentUser.first_name}} {{ currentUser.last_name}}</p>
+        <div class="media">
+          <div class="media-left">
+            <img class="media-object img-circle" :src="currentUser.photo_50" alt="">
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">{{ currentUser.first_name}} {{ currentUser.last_name}}</h4>
+          </div>
+        </div>
       </div>
       <div class="col-md-8">
-        Page template
+        <GroupsList />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import GroupsList from './GroupsList.vue'
 
 export default {
   computed: mapGetters([
       'currentUser'
-  ])
+  ]),
+
+  components: {
+    GroupsList
+  }
 }
 </script>

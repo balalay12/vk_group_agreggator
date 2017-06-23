@@ -34,3 +34,20 @@ export const userInit = ({commit}) => {
     }
   });
 }
+
+export const groupsLoading = ({commit}, keyword) => {
+  commit(types.GROUPS_LOADING)
+  VK.Api.call('groups.search', {
+    q: keyword,
+    type: 'group',
+    count: 3
+  }, (r) => {
+    if (r.error) {
+      console.log('error', r.error.error_msg);
+      commit(types.GROUPS_LOADING_FAULT)
+    } else {
+      commit(types.GROUPS_LOADING_SUCCESS, r.response)
+    }
+
+  })
+}

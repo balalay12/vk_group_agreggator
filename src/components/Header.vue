@@ -25,12 +25,12 @@
               <button
                 v-if="!currentUser.auth"
                 type="button"
-                class="btn btn-primary navbar-btn"
+                class="btn btn-default navbar-btn"
                 @click="userLogin">Vk Auth</button>
               <button
                 v-else
                 type="button"
-                class="btn btn-primary navbar-btn"
+                class="btn btn-default navbar-btn"
                 @click="userLogout">Vk Out</button>
             </li>
           </ul>

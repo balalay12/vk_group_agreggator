@@ -10,6 +10,10 @@ const state = {
   user: {
     loading: false,
     auth: false
+  },
+  groups: {
+    items: [],
+    loading: false
   }
 }
 
