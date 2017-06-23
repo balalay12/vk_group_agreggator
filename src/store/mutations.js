@@ -31,13 +31,15 @@ export const mutations = {
   },
 
   [types.GROUPS_LOADING_SUCCESS] (state, groups_data) {
-    let count = groups_data.shift()
     state.groups.items = groups_data
-    state.groups.count = count
     state.groups.loading = false
   },
 
   [types.GROUPS_LOADING_FAULT] (state) {
     state.groups.loading = false
+  },
+
+  [types.GROUPS_COUNT] (state, count) {
+    state.groups.count = count
   }
 }

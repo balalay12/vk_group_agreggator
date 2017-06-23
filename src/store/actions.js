@@ -35,7 +35,7 @@ export const userInit = ({commit}) => {
   });
 }
 
-export const groupsLoading = ({commit}, [keyword, count]) => {
+export const groupsSearch = ({commit, dispatch}, [keyword, count]) => {
   commit(types.GROUPS_LOADING)
   VK.Api.call('groups.search', {
     q: keyword,
@@ -46,8 +46,27 @@ export const groupsLoading = ({commit}, [keyword, count]) => {
       console.log('error', r.error.error_msg);
       commit(types.GROUPS_LOADING_FAULT)
     } else {
+      commit(types.GROUPS_COUNT, r.response.shift())
+      let ids = []
+      r.response.forEach((item, i) => {
+        ids.push(item.gid)
+      })
+      dispatch('getGroupsById', ids)
+    }
+  })
+}
+
+export const getGroupsById = ({commit}, ids) => {
+  VK.Api.call('groups.getById', {
+    group_ids: ids.join(),
+    fields: 'members_count,can_post,activity'
+  }, (r) => {
+    if (r.error) {
+      console.log('error', r.error.error_msg);
+      commit(types.GROUPS_LOADING_FAULT)
+    } else {
+      console.log(r.response);
       commit(types.GROUPS_LOADING_SUCCESS, r.response)
     }
-
   })
 }

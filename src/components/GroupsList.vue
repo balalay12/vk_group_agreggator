@@ -28,6 +28,8 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">{{ group.name }}</h4>
+              <h5>{{ group.activity }}</h5>
+              <h6>Количество участников: {{ group.members_count}} | Возможность разместить пост: {{ group.can_post ? 'да' : 'нет' }}</h6>
             </div>
           </div>
         </div>
@@ -54,7 +56,7 @@ export default {
 
   methods: {
     loadGroups() {
-      this.$store.dispatch('groupsLoading', [this.keyword, this.count])
+      this.$store.dispatch('groupsSearch', [this.keyword, this.count])
     }
   }
 }
