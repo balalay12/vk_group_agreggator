@@ -3,9 +3,17 @@
     <form class="form-inline">
       <div class="form-group">
         <label>Ключевое слово</label>
-        <input type="text" v-model="keyword">
+        <input class="form-control" type="text" v-model="keyword">
+      <!-- </div> -->
+      <!-- <div class="from-group"> -->
+        <label>Количество записей</label>
+        <select class="form-control" v-model="count">
+          <option value="10" selected>10</option>
+          <option value="50">50</option>
+          <option value="50">100</option>
+        </select>
       </div>
-      <button class="btn btn-default" @click="loadGroups">Поиск</button>
+      <button class="btn btn-default" @click.prevent="loadGroups">Поиск</button>
     </form>
     <hr>
     <div class="">
@@ -34,7 +42,8 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      keyword: ''
+      keyword: '',
+      count: '10'
     }
   },
 
@@ -45,7 +54,7 @@ export default {
 
   methods: {
     loadGroups() {
-      this.$store.dispatch('groupsLoading', this.keyword)
+      this.$store.dispatch('groupsLoading', [this.keyword, this.count])
     }
   }
 }
