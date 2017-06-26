@@ -62,10 +62,8 @@ export const getGroupsById = ({commit}, ids) => {
     fields: 'members_count,can_post,activity'
   }, (r) => {
     if (r.error) {
-      console.log('error', r.error.error_msg);
       commit(types.GROUPS_LOADING_FAULT)
     } else {
-      console.log(r.response);
       commit(types.GROUPS_LOADING_SUCCESS, r.response)
     }
   })

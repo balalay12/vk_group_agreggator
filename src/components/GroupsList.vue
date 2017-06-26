@@ -22,7 +22,7 @@
         <div v-if="getGroups.items.length > 0">
           <h6>Всего групп в ВК по этому слову: {{ getGroups.count }}</h6>
           <h4>Результаты</h4>
-          <div v-for="group in getGroups.items" class="media">
+          <div v-for="group in getGroups.items" class="media well" @click="linkToGroup(group.gid)">
             <div class="media-left">
               <img class="media-object img-circle" :src="group.photo" alt="">
             </div>
@@ -57,6 +57,9 @@ export default {
   methods: {
     loadGroups() {
       this.$store.dispatch('groupsSearch', [this.keyword, this.count])
+    },
+    linkToGroup(id) {
+      this.$router.push(`/group/${id}`)
     }
   }
 }
