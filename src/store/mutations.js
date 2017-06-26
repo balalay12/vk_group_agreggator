@@ -41,5 +41,16 @@ export const mutations = {
 
   [types.GROUPS_COUNT] (state, count) {
     state.groups.count = count
+  },
+
+  [types.POSTS_LOADING] (state) {
+    state.posts_loading = true
+  },
+
+  [types.POSTS_LOADING_SUCCESS] (state, [posts_data, index]) {
+    let count = posts_data.shift()
+    state.groups.items[index].posts = posts_data
+    state.groups.items[index].posts.count = count
+    state.posts_loading = false
   }
 }

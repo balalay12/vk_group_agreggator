@@ -14,7 +14,8 @@ const state = {
   groups: {
     items: [],
     loading: false
-  }
+  },
+  posts_loading: false
 }
 
 export default new Vuex.Store({

@@ -68,3 +68,17 @@ export const getGroupsById = ({commit}, ids) => {
     }
   })
 }
+
+export const getPosts = ({commit}, [group, index]) => {
+  commit(types.POSTS_LOADING)
+  VK.Api.call('wall.get', {
+    owner_id: `-${group.gid}`,
+    count: '10'
+  }, (r) => {
+    if (r.error) {
+      commit(types.POSTS_LOADING_FAULT)
+    } else {
+      commit(types.POSTS_LOADING_SUCCESS, [r.response, index])
+    }
+  })
+}
