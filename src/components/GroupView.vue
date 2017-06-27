@@ -22,7 +22,7 @@
       <div v-for="post in group.posts" class="col-md-12">
         <div class="panel panel-default">
           <!-- Default panel contents -->
-          <div class="panel-heading">{{ post.date }}</div>
+          <div class="panel-heading">{{ new Date(post.date*1000).toLocaleString('ru-RU') }}</div>
           <div class="panel-body">
             <p v-html="post.text"></p>
             <div v-if="post.attachment">
@@ -36,8 +36,8 @@
           <ul class="list-group">
             <li v-if="post.attachments" class="list-group-item">
               <div class="row">
-                <div v-for="attachment in post.attachments" class="col-md-2">
-                  <div v-if="attachment.type === 'photo'">
+                <div v-for="attachment in post.attachments">
+                  <div v-if="attachment.type === 'photo'" class="col-md-2">
                     <img :src="attachment.photo.src" alt="post attachment" class="img-thumbnail">
                   </div>
                   <div v-if="attachment.type === 'video'">
