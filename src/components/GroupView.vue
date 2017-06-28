@@ -50,7 +50,6 @@
 
       <div v-for="post in group.posts" class="col-md-12">
         <div class="panel panel-default">
-          <!-- Default panel contents -->
           <div class="panel-heading">{{ new Date(post.date*1000).toLocaleString('ru-RU') }}</div>
           <div class="panel-body">
             <p v-html="post.text"></p>
@@ -61,7 +60,6 @@
             </div>
           </div>
 
-          <!-- List group -->
           <ul class="list-group">
             <li v-if="post.attachments" class="list-group-item">
               <div class="row">
@@ -109,39 +107,22 @@ export default {
     }
   },
 
-  methods: {
-    findGroup() {
-      let id = Number(this.$route.params.id)
-      this.group = this.$store.state.groups.items.find(item => item.gid === id)
-    },
-    // filterPosts() {
-    //   console.log(typeof this.group.post);
-    //   console.log(this.group.posts.filter(post => post.likes.count >= this.filter_posts.likes
-    //     // post.comments.count >= this.filter_posts.comments;
-    //     // post.reposts.count >= this.filter_posts.reposts;
-    //   ))
-    // }
-  },
-
   computed: {
     ...mapGetters([
-      'postsLoading'
-    ]),
-    filterPosts() {
-      return this.group.posts.filter(post => post.likes.count >= this.filter_posts.likes
-        // post.comments.count >= this.filter_posts.comments;
-        // post.reposts.count >= this.filter_posts.reposts;
-      )
-    }
+      'postsLoading',
+      'findGroup',
+      'findIdenxGroup'
+    ])
   },
 
   created() {
-    this.findGroup()
+    let group_id = Number(this.$route.params.id)
+    this.group = this.findGroup(group_id)[0]
     if (typeof(this.group) === 'undefined') {
       this.$router.push('/')
     } else if (!this.group.posts) {
-      let index = this.$store.state.groups.items.indexOf(this.group)
-      this.$store.dispatch('getPosts', [this.group, index])
+      let index = this.findIdenxGroup(group_id)
+      this.$store.dispatch('getPosts', [group_id, index])
     }
   }
 }
