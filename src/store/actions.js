@@ -35,12 +35,13 @@ export const userInit = ({commit}) => {
   });
 }
 
-export const groupsSearch = ({commit, dispatch}, [keyword, count]) => {
+export const groupsSearch = ({commit, dispatch}, [keyword, count, sort]) => {
   commit(types.GROUPS_LOADING)
   VK.Api.call('groups.search', {
     q: keyword,
     type: 'group',
-    count: Number(count)
+    count: Number(count),
+    sort: Number(sort)
   }, (r) => {
     if (r.error) {
       console.log('error', r.error.error_msg);
