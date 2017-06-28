@@ -70,7 +70,7 @@ export const getGroupsById = ({commit}, ids) => {
   })
 }
 
-export const getPosts = ({commit}, [group_id, index]) => {
+export const fetchPosts = ({commit}, [group_id, index]) => {
   commit(types.POSTS_LOADING)
   VK.Api.call('wall.get', {
     owner_id: `-${group_id}`,

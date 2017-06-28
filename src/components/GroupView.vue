@@ -47,8 +47,7 @@
         </form>
       </div>
       <hr>
-
-      <div v-for="post in group.posts" class="col-md-12">
+      <div v-for="post in getPosts(group.gid, filter_posts)" class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-heading">{{ new Date(post.date*1000).toLocaleString('ru-RU') }}</div>
           <div class="panel-body">
@@ -111,7 +110,8 @@ export default {
     ...mapGetters([
       'postsLoading',
       'findGroup',
-      'findIdenxGroup'
+      'findIdenxGroup',
+      'getPosts'
     ])
   },
 
@@ -122,7 +122,7 @@ export default {
       this.$router.push('/')
     } else if (!this.group.posts) {
       let index = this.findIdenxGroup(group_id)
-      this.$store.dispatch('getPosts', [group_id, index])
+      this.$store.dispatch('fetchPosts', [group_id, index])
     }
   }
 }
