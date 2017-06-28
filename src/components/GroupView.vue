@@ -14,11 +14,40 @@
         </div>
       </div>
     </div>
-    <div v-if="postLoading" class="">
+    <div v-if="postsLoading" class="">
       Loading...
     </div>
     <div v-else class="row">
       <h5>Всего постов в группе - {{ group.posts.count }}</h5>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" v-model="show_form">
+          {{ show_form ? 'Скрыть' : 'Показать' }} форму фильтрации
+        </label>
+      </div>
+      <div v-show="show_form" class="col-md-12">
+        <form class="form">
+          <!-- <div class="form-group">
+            <label>Поиск по слову</label>
+            <input type="text">
+          </div> -->
+          <div class="form-group">
+            <label>Количество лайков не менее</label>
+            <input type="text" v-model="filter_posts.likes">
+          </div>
+          <div class="form-group">
+            <label>Количество репостов не менее</label>
+            <input type="text" v-model="filter_posts.reposts">
+          </div>
+          <div class="form-group">
+            <label>Количество комментариев не менее</label>
+            <input type="text" v-model="filter_posts.comments">
+          </div>
+          <button class="btn btn-default" @click.prevent="filterPosts()">Поиск</button>
+        </form>
+      </div>
+      <hr>
+
       <div v-for="post in group.posts" class="col-md-12">
         <div class="panel panel-default">
           <!-- Default panel contents -->
@@ -65,10 +94,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
-      group: {}
+      group: {},
+      show_form: false,
+      filter_posts: {
+        likes: 0,
+        reposts: 0,
+        comments: 0
+      }
     }
   },
 
@@ -76,12 +113,25 @@ export default {
     findGroup() {
       let id = Number(this.$route.params.id)
       this.group = this.$store.state.groups.items.find(item => item.gid === id)
-    }
+    },
+    // filterPosts() {
+    //   console.log(typeof this.group.post);
+    //   console.log(this.group.posts.filter(post => post.likes.count >= this.filter_posts.likes
+    //     // post.comments.count >= this.filter_posts.comments;
+    //     // post.reposts.count >= this.filter_posts.reposts;
+    //   ))
+    // }
   },
 
   computed: {
-    postLoading() {
-      return this.$store.getters.postsLoading
+    ...mapGetters([
+      'postsLoading'
+    ]),
+    filterPosts() {
+      return this.group.posts.filter(post => post.likes.count >= this.filter_posts.likes
+        // post.comments.count >= this.filter_posts.comments;
+        // post.reposts.count >= this.filter_posts.reposts;
+      )
     }
   },
 
