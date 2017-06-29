@@ -74,7 +74,20 @@ export const fetchPosts = ({commit}, [group_id, index]) => {
   commit(types.POSTS_LOADING)
   VK.Api.call('wall.get', {
     owner_id: `-${group_id}`,
-    count: '10'
+  }, (r) => {
+    if (r.error) {
+      commit(types.POSTS_LOADING_FAULT)
+    } else {
+      commit(types.POSTS_LOADING_SUCCESS, [r.response, index])
+    }
+  })
+}
+
+export const searchPosts = ({commit}, [group_id, index, keyword]) => {
+  commit(types.POSTS_LOADING)
+  VK.Api.call('wall.search', {
+    query: keyword,
+    owner_id: `-${group_id}`
   }, (r) => {
     if (r.error) {
       commit(types.POSTS_LOADING_FAULT)

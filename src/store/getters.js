@@ -13,7 +13,6 @@ const getters = {
 
   postsLoading: state => state.posts_loading,
   getPosts: (state, getters) => (id, filters) => {
-    console.log(filters);
     return  getters.findGroup(id)[0].posts.filter(post => {
       if (post.likes.count >= filters.likes && post.reposts.count >= filters.reposts && post.comments.count >= filters.comments) {
         return post

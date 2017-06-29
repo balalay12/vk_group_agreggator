@@ -19,6 +19,11 @@
     </div>
     <div v-else class="row">
       <h5>Всего постов в группе - {{ group.posts.count }}</h5>
+      <form class="form-inline">
+        <label>Поиск поста</label>
+        <input type="text" class="form-control input-sm" v-model="keyword">
+        <button class="btn btn-default" @click.prevent="searchPosts([group.gid, findIdenxGroup(group.gid), keyword])">Поиск</button>
+      </form>
       <PostsFilterForm :filters="filters" />
       <hr>
       <div v-for="post in getPosts(group.gid, filters)" class="col-md-12">
@@ -29,7 +34,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import PostsFilterForm from './PostsFilterForm.vue'
 import PostCard from './PostCard.vue'
 
@@ -38,6 +43,7 @@ export default {
     return {
       group: {},
       show_form: false,
+      keyword: '',
       filters: {
         likes: 0,
         reposts: 0,
@@ -49,6 +55,12 @@ export default {
   components: {
     PostsFilterForm,
     PostCard
+  },
+
+  methods: {
+    ...mapActions([
+      'searchPosts'
+    ])
   },
 
   computed: {
