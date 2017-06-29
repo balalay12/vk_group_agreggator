@@ -8,16 +8,7 @@
       Loading...
     </div>
     <div class="row">
-      <div class="col-md-4">
-        <div class="media">
-          <div class="media-left">
-            <img class="media-object img-circle" :src="currentUser.photo_50" alt="">
-          </div>
-          <div class="media-body">
-            <h4 class="media-heading">{{ currentUser.first_name}} {{ currentUser.last_name}}</h4>
-          </div>
-        </div>
-      </div>
+      <User />
       <div class="col-md-8">
         <GroupsList />
       </div>
@@ -26,16 +17,18 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import GroupsList from './GroupsList.vue'
+import User from './User.vue'
 
 export default {
+  components: {
+    GroupsList,
+    User
+  },
+
   computed: mapGetters([
       'currentUser'
   ]),
-
-  components: {
-    GroupsList
-  }
 }
 </script>
