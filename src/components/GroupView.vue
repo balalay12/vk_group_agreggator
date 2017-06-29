@@ -19,69 +19,10 @@
     </div>
     <div v-else class="row">
       <h5>Всего постов в группе - {{ group.posts.count }}</h5>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" v-model="show_form">
-          {{ show_form ? 'Скрыть' : 'Показать' }} форму фильтрации
-        </label>
-      </div>
-      <div v-show="show_form" class="col-md-12">
-        <form class="form-inline">
-          <h4>Фильтровать по</h4>
-          <div class="form-group">
-            <label>Лайкам</label>
-            <input type="text" class="form-control input-sm" v-model="filter_posts.likes">
-          </div>
-          <div class="form-group">
-            <label>Репостам</label>
-            <input type="text" class="form-control input-sm" v-model="filter_posts.reposts">
-          </div>
-          <div class="form-group">
-            <label>Комментариям</label>
-            <input type="text" class="form-control input-sm" v-model="filter_posts.comments">
-          </div>
-        </form>
-        <br>
-      </div>
+      <PostsFilterForm :filters="filters" />
       <hr>
-      <div v-for="post in getPosts(group.gid, filter_posts)" class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">{{ new Date(post.date*1000).toLocaleString('ru-RU') }}</div>
-          <div class="panel-body">
-            <p v-html="post.text"></p>
-            <div v-if="post.attachment">
-              <div v-if="post.attachment.type === 'photo'">
-                <img :src="post.attachment.photo.src_big" alt="post attachment" class="img-thumbnail">
-              </div>
-            </div>
-          </div>
-
-          <ul class="list-group">
-            <li v-if="post.attachments" class="list-group-item">
-              <div class="row">
-                <div v-for="attachment in post.attachments">
-                  <div v-if="attachment.type === 'photo'" class="col-md-2">
-                    <img :src="attachment.photo.src" alt="post attachment" class="img-thumbnail">
-                  </div>
-                  <div v-if="attachment.type === 'video'">
-                    <div class="media">
-                      <div class="media-left">
-                          <img :src="attachment.video.image_big" alt="video preview">
-                      </div>
-                      <div class="media-body">
-                        <h4 class="media-heading">{{ attachment.video.title }}</h4>
-                        <p v-html="attachment.video.description"></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <h5>Комментариев: {{ post.comments.count }} | Лайков: {{ post.likes.count }} | Репостов: {{ post.reposts.count }}</h5>
-            </li>
-          </ul>
-        </div>
+      <div v-for="post in getPosts(group.gid, filters)" class="col-md-12">
+        <PostCard :post="post" />
       </div>
     </div>
   </div>
@@ -89,18 +30,25 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import PostsFilterForm from './PostsFilterForm.vue'
+import PostCard from './PostCard.vue'
 
 export default {
   data() {
     return {
       group: {},
       show_form: false,
-      filter_posts: {
+      filters: {
         likes: 0,
         reposts: 0,
         comments: 0
       }
     }
+  },
+
+  components: {
+    PostsFilterForm,
+    PostCard
   },
 
   computed: {
