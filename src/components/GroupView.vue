@@ -26,25 +26,22 @@
         </label>
       </div>
       <div v-show="show_form" class="col-md-12">
-        <form class="form">
-          <!-- <div class="form-group">
-            <label>Поиск по слову</label>
-            <input type="text">
-          </div> -->
+        <form class="form-inline">
+          <h4>Фильтровать по</h4>
           <div class="form-group">
-            <label>Количество лайков не менее</label>
-            <input type="text" v-model="filter_posts.likes">
+            <label>Лайкам</label>
+            <input type="text" class="form-control input-sm" v-model="filter_posts.likes">
           </div>
           <div class="form-group">
-            <label>Количество репостов не менее</label>
-            <input type="text" v-model="filter_posts.reposts">
+            <label>Репостам</label>
+            <input type="text" class="form-control input-sm" v-model="filter_posts.reposts">
           </div>
           <div class="form-group">
-            <label>Количество комментариев не менее</label>
-            <input type="text" v-model="filter_posts.comments">
+            <label>Комментариям</label>
+            <input type="text" class="form-control input-sm" v-model="filter_posts.comments">
           </div>
-          <button class="btn btn-default" @click.prevent="filterPosts()">Поиск</button>
         </form>
+        <br>
       </div>
       <hr>
       <div v-for="post in getPosts(group.gid, filter_posts)" class="col-md-12">
