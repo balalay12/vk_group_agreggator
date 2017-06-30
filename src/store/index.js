@@ -8,8 +8,10 @@ Vue.use(Vuex)
 
 const state = {
   user: {
-    loading: false,
-    auth: false
+    data: {},
+    auth: false,
+    groups_loading: false,
+    group: {}
   },
   groups: {
     items: [],

@@ -4,7 +4,7 @@
   </div>
 
   <div v-else class="container">
-    <div v-if="currentUser.loading" class="">
+    <div v-if="currentUser.data.loading" class="">
       Loading...
     </div>
     <div class="row">

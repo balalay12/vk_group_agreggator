@@ -20,12 +20,13 @@ export const userLogout = ({commit}) => {
   })
 }
 
-export const userInit = ({commit}) => {
+export const userInit = ({commit, dispatch}) => {
   commit(types.USER_LOADING)
   VK.Api.call('users.get', {
     fields: ['photo_50']
   }, (user) => {
     try {
+      dispatch('getUserGroups', user.response[0].uid)
       commit(types.USER_INIT, user.response[0])
     }
     catch(e) {
@@ -33,6 +34,26 @@ export const userInit = ({commit}) => {
       commit(types.USER_INIT_FAULT)
     }
   });
+}
+
+export const getUserGroups = ({commit}, user_id) => {
+  commit(types.USER_GROUPS_LOADING)
+  VK.Api.call('groups.get', {
+    user_id: user_id,
+    extended: 1
+    // filter: 'moder'
+  }, (r) => {
+    if (r.error) {
+      commit(types.USER_GROUPS_LOADING_FAULT)
+    } else {
+      r.response.shift()
+      commit(types.USER_GROUPS_LOADING_SUCCESS, r.response)
+    }
+  })
+}
+
+export const setUserGroup = ({commit}, group) => {
+  commit(types.USER_SET_GROUP, group)
 }
 
 export const groupsSearch = ({commit, dispatch}, [keyword, count, sort]) => {

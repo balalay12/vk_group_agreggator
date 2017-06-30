@@ -1,6 +1,8 @@
 const getters = {
   currentUser: state => state.user,
   userLoading: state => state.user.loading,
+  userGroupsLoading: state => state.user.groups_loading,
+  userGroup: state => state.user.group,
 
   groupsLoading: state => state.groups.loading,
   getGroups: state => state.groups,
