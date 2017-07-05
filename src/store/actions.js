@@ -2,8 +2,9 @@ import * as types from './mutation-types'
 
 export const userLogin = ({commit, dispatch}) => {
   commit(types.USER_LOADING)
-  let permission = '262144'
-  VK.Auth.login(function(response, permission) {
+  //wall
+  let permission = '8192'
+  VK.Auth.login(function(response) {
     if (response.session) {
       /* Пользователь успешно авторизовался */
       dispatch('userInit')
@@ -11,7 +12,7 @@ export const userLogin = ({commit, dispatch}) => {
       /* Пользователь нажал кнопку Отмена в окне авторизации */
       commit(types.USER_INIT_FAULT)
     }
-  })
+  }, permission)
 }
 
 export const userLogout = ({commit}) => {

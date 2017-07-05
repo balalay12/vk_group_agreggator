@@ -6,7 +6,7 @@ export const mutations = {
   },
 
   [types.USER_LOGOUT] (state) {
-    state.user = {}
+    state.user.data = {}
     state.groups.items = []
     state.groups.count = ''
     state.user.auth = false

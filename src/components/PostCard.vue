@@ -31,16 +31,42 @@
           </div>
         </div>
       </li>
-      <li class="list-group-item">
-        <h5>Комментариев: {{ post.comments.count }} | Лайков: {{ post.likes.count }} | Репостов: {{ post.reposts.count }}</h5>
-      </li>
     </ul>
+    <div class="panel-footer clearfix">
+      Комментариев: {{ post.comments.count }} | Лайков: {{ post.likes.count }} | Репостов: {{ post.reposts.count }}
+      <button type="button" class="btn btn-default pull-right" @click="wallPost">Опубликовать</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['post']
+  props: ['post'],
+
+  methods: {
+    wallPost() {
+      let items = []
+      for (let item in this.post.attachments) {;
+        let attach_type = this.post.attachments[item].type
+        if (attach_type === 'photo') {
+          items.push(`${this.post.attachments[item].type}${this.post.attachments[item].photo.owner_id}_${this.post.attachments[item].photo.pid}`)
+        }
+      }
+      VK.Api.call('wall.post', {
+        // TODO: owner_id = user group id
+        owner_id: this.$store.getters.currentUser.data.uid,
+        // from_group: 1,
+        message: this.post.text,
+        attachments: items.join()
+      }, (r) => {
+        if (r.error) {
+          console.log(r.error);
+        } else {
+          console.log(r.response);
+        }
+      })
+    }
+  }
 }
 </script>
 
